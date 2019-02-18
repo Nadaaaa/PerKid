@@ -36,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
+        // To Add Database.
+        writeToDB();
+
         textInputLayout_username = findViewById(R.id.textInputLayout_username);
         textInputLayout_password = findViewById(R.id.textInputLayout_password);
         button_signIn = findViewById(R.id.button_signIn);
@@ -52,8 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         realm.deleteAll();
         realm.commitTransaction();*/
 
-        // To Add Database.
-        // writeToDB();
 
     }
 
