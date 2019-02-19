@@ -6,7 +6,9 @@ public class User extends RealmObject {
 
     String username;
     String password;
+    String accountType;
     boolean isLogged;
+
 
     public String getUsername() {
         return username;
@@ -22,6 +24,14 @@ public class User extends RealmObject {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     public boolean isLogged() {

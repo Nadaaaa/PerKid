@@ -8,15 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.xdev.perkid.R;
 import com.example.xdev.perkid.Utils.Utils;
-import com.example.xdev.perkid.models.CurrentUser;
 import com.example.xdev.perkid.models.User;
 
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     //Views
     TextInputLayout textInputLayout_username, textInputLayout_password;
     Button button_signIn;
+    TextView textView_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,31 +35,33 @@ public class LoginActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
-        // To Add Database.
-        writeToDB();
-
-        textInputLayout_username = findViewById(R.id.textInputLayout_username);
-        textInputLayout_password = findViewById(R.id.textInputLayout_password);
+        textInputLayout_username = findViewById(R.id.login_textInputLayout_username);
+        textInputLayout_password = findViewById(R.id.login_textInputLayout_password);
         button_signIn = findViewById(R.id.button_signIn);
-
+        textView_register = findViewById(R.id.login_text_register);
 
         if (isLogged()) {
             login();
         }
 
         onClickSignInButton();
+        onClickTextRegister();
+    }
 
-        //To Delete All Database.
-       /* realm.beginTransaction();
-        realm.deleteAll();
-        realm.commitTransaction();*/
+    boolean isLogged() {
+        User user = realm.where(User.class)
+                .equalTo("isLogged", true)
+                .findFirst();
 
-
+        if (user != null) {
+            return true;
+        }
+        return false;
     }
 
     void login() {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
+        LoginActivity.this.finish();
     }
 
     void onClickSignInButton() {
@@ -110,54 +111,35 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-    void writeToDB() {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                User user = bgRealm.createObject(User.class);
-                user.setUsername("xdev");
-                user.setPassword("123456");
-                user.setLogged(false);
-            }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                // Transaction was a success.
-                //Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                // Transaction failed and was automatically canceled.
-                //Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
     boolean isValidData() {
 
         if ((!Utils.isEmptyInputTextLayout(textInputLayout_username, textInputLayout_password))) {
-            return true;
+
+            if (Utils.isValidPassword(textInputLayout_password)) {
+                return true;
+            }
         }
         return false;
     }
 
+    void onClickTextRegister() {
+        textView_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                LoginActivity.this.finish();
+            }
+        });
+    }
 
-    boolean isLogged() {
-        User user = realm.where(User.class)
-                .equalTo("username", "xdev")
-                .equalTo("password", "123456")
-                .equalTo("isLogged", true)
-                .findFirst();
+    void getAllUsers() {
+        RealmResults<User> users = realm.where(User.class).findAll();
+    }
 
-        if (user != null) {
-            return true;
-        } /*else {
-            //Toast.makeText(this, "You Don't Have an Account", Toast.LENGTH_LONG).show();
-        }*/
-        return false;
+    void clearDatabase() {
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.xdev.perkid.Utils;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.xdev.perkid.R;
 
@@ -23,18 +24,33 @@ public class Utils {
         return false;
     }
 
-    public static boolean isValidPassword(EditText password) {
-        if (!password.getText().toString().isEmpty()) {
+    public static boolean isValidPassword(TextInputLayout password) {
+        if (!password.getEditText().getText().toString().isEmpty()) {
             String passwordPattern = "((?=.*[A-Za-z]).(?=.*[A-Za-z0-9@#$%_])(?=\\S+$).{3,})";
             Pattern pattern = Pattern.compile(passwordPattern);
-            Matcher matcher = pattern.matcher(password.getText().toString());
+            Matcher matcher = pattern.matcher(password.getEditText().getText().toString());
             if (matcher.matches()) {
                 return true;
             }
-            password.requestFocus();
+            password.setErrorEnabled(true);
+            password.setErrorTextAppearance(R.style.TextInputLayoutError);
             password.setError("password must contain at least 3 digits, one character or more ");
             return false;
         }
         return true;
+    }
+
+    public static boolean isMatched(TextInputLayout textInputLayout1, TextInputLayout textInputLayout2) {
+        if (!textInputLayout2.getEditText().getText().toString().equals(textInputLayout1.getEditText().getText().toString())) {
+            textInputLayout2.setError(" Password Doesn't Match ");
+            textInputLayout2.setErrorEnabled(true);
+            textInputLayout2.setErrorTextAppearance(R.style.TextInputLayoutError);
+            return false;
+        }
+        return true;
+    }
+
+    public static void setErrorTextView(TextView textView) {
+        textView.setError(" You Must Choose Account Type ");
     }
 }

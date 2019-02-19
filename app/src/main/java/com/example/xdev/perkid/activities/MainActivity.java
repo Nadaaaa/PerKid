@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xdev.perkid.R;
-import com.example.xdev.perkid.models.CurrentUser;
 import com.example.xdev.perkid.models.User;
 
 import io.realm.Realm;
@@ -19,16 +19,57 @@ public class MainActivity extends AppCompatActivity {
 
     Realm realm;
 
+    String username, accountType;
+
+    TextView textView_username, textView_accountType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textView_username = findViewById(R.id.main_text_username);
+        textView_accountType = findViewById(R.id.main_text_accountType);
+
         imageView_signOut = findViewById(R.id.imageView_signOut);
 
         realm = Realm.getDefaultInstance();
 
+        getCurrentUser();
+
         onClickSignOutImage();
+
+    }
+
+    void getCurrentUser() {
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                User user = realm.where(User.class)
+                        .equalTo("isLogged", true)
+                        .findFirst();
+
+                username = user.getUsername();
+                accountType = user.getAccountType();
+
+                textView_username.setText(username);
+                textView_accountType.setText(accountType);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                // Transaction was a success.
+                // Toast.makeText(MainActivity.this, "EditSuccess", Toast.LENGTH_SHORT).show();
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                // Transaction failed and was automatically canceled.
+                //Toast.makeText(MainActivity.this, "EditError", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -41,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
                     public void execute(Realm realm) {
 
                         User user = realm.where(User.class)
-                                .equalTo("username", "xdev")
-                                .equalTo("password", "123456")
                                 .equalTo("isLogged", true)
                                 .findFirst();
                         user.setLogged(false);
@@ -69,6 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
     void signOut() {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        finish();
+        MainActivity.this.finish();
     }
 }
