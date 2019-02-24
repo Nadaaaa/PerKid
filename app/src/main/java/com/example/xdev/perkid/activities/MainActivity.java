@@ -1,14 +1,16 @@
 package com.example.xdev.perkid.activities;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.xdev.perkid.fragments.KidsFragment;
 import com.example.xdev.perkid.R;
+import com.example.xdev.perkid.fragments.ParentsFragment;
 import com.example.xdev.perkid.models.User;
 
 import io.realm.Realm;
@@ -16,22 +18,18 @@ import io.realm.Realm;
 public class MainActivity extends AppCompatActivity {
 
     ImageView imageView_signOut;
+    TextView textView_accountType;
 
     Realm realm;
 
-    String username, accountType;
-
-    TextView textView_username, textView_accountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView_username = findViewById(R.id.main_text_username);
-        textView_accountType = findViewById(R.id.main_text_accountType);
-
         imageView_signOut = findViewById(R.id.imageView_signOut);
+        textView_accountType = findViewById(R.id.toolbar_textView_accountType);
 
         realm = Realm.getDefaultInstance();
 
@@ -51,11 +49,21 @@ public class MainActivity extends AppCompatActivity {
                         .equalTo("isLogged", true)
                         .findFirst();
 
-                username = user.getUsername();
-                accountType = user.getAccountType();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if (user.getAccountType().equals("kid")) {
+                    KidsFragment kidsFragment = KidsFragment.newInstance(user.getUsername());
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_frame, kidsFragment)
+                            .commit();
+                    textView_accountType.setText(getResources().getString(R.string.kid));
+                } else {
+                    ParentsFragment parentsFragment = new ParentsFragment();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_frame, parentsFragment)
+                            .commit();
+                    textView_accountType.setText(getResources().getString(R.string.parent));
+                }
 
-                textView_username.setText(username);
-                textView_accountType.setText(accountType);
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override

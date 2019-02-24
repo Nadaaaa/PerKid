@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.xdev.perkid.R;
-import com.example.xdev.perkid.Utils.Utils;
+import com.example.xdev.perkid.utils.Utils;
 import com.example.xdev.perkid.models.User;
 
 import io.realm.Realm;
@@ -145,6 +145,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        realm.close();
+        //realm.close();
     }
 }

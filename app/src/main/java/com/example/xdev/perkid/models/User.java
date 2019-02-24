@@ -4,11 +4,10 @@ import io.realm.RealmObject;
 
 public class User extends RealmObject {
 
-    String username;
-    String password;
-    String accountType;
-    boolean isLogged;
-
+    private String username;
+    private String password;
+    private String accountType;
+    private boolean isLogged;
 
     public String getUsername() {
         return username;

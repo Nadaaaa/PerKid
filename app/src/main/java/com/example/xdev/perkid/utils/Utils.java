@@ -1,8 +1,7 @@
-package com.example.xdev.perkid.Utils;
+package com.example.xdev.perkid.utils;
 
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.xdev.perkid.R;

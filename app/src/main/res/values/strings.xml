@@ -11,7 +11,18 @@
     <string name="already_member">Already Member?</string>
     <string name="do_not_have_account">Don\'t Have Account?</string>
     <string name="account_type">Account Type</string>
+    <string name="youtube">Youtube</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="pinterest">Pinterest</string>
+    <string name="twitter">twitter</string>
+    <string name="snapchat">Snapchat</string>
+    <string name="text_number">74</string>
 
     <!--Content Description-->
-    <string name="image_signout">Forget Password?</string>
+    <string name="image_signout">image_signout</string>
+    <string name="image_social_media">image_social_media</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
