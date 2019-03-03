@@ -1,16 +1,12 @@
 package com.example.xdev.perkid.models;
 
 import io.realm.RealmObject;
-import io.realm.annotations.RealmField;
 
 public class SocialMedia extends RealmObject {
-    // username is a foreign key
 
-    @RealmField
+    // username is a foreign key
     private String username;
-    @RealmField
     private int visitTimes;
-    @RealmField
     private String name;
 
     public SocialMedia() {
@@ -46,4 +42,5 @@ public class SocialMedia extends RealmObject {
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

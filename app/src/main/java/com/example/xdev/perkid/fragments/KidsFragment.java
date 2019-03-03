@@ -10,9 +10,12 @@ import android.view.ViewGroup;
 
 import com.example.xdev.perkid.R;
 import com.example.xdev.perkid.adapters.SocialMediaAdapter;
+import com.example.xdev.perkid.models.History;
 import com.example.xdev.perkid.models.SocialMedia;
 import com.example.xdev.perkid.models.SocialMediaAdapterModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import io.realm.Realm;
@@ -66,6 +69,12 @@ public class KidsFragment extends Fragment implements SocialMediaAdapter.ListIte
     @Override
     public void onListItemClicked(int clickedItemIndex) {
         sumUpNumberOFClicks(socialMediaList.get(clickedItemIndex).getName());
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+        String datetime = dateFormat.format(c.getTime());
+
+        addToHistory(socialMediaList.get(clickedItemIndex).getName(), datetime);
     }
 
     void sumUpNumberOFClicks(final String socialMediaName) {
@@ -138,5 +147,29 @@ public class KidsFragment extends Fragment implements SocialMediaAdapter.ListIte
     public void onDestroy() {
         super.onDestroy();
     }
+
+    void addToHistory(final String socialMediaName, final String socialMediaTimeAndDate) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                History history = realm.createObject(History.class);
+                history.setKidUsername(currentUserName);
+                history.setSocialMediaName(socialMediaName);
+                history.setSocialMediaTimeAndData(socialMediaTimeAndDate);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                // Transaction was a success.
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                // Transaction failed and was automatically canceled.
+            }
+        });
+
+    }
 }
+
 

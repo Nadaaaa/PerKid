@@ -18,6 +18,7 @@
     <string name="twitter">twitter</string>
     <string name="snapchat">Snapchat</string>
     <string name="text_number">74</string>
+    <string name="kid_username">Kid Username (If You are a Parent)</string>
 
     <!--Content Description-->
     <string name="image_signout">image_signout</string>

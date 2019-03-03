@@ -1,10 +1,5 @@
 package com.example.xdev.perkid.models;
 
-import android.graphics.drawable.Drawable;
-
-import io.realm.RealmObject;
-import io.realm.annotations.RealmField;
-
 // This object is used to send data to the adapter.
 public class SocialMediaAdapterModel {
     private String username;

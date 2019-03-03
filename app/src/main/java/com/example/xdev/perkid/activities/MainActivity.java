@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                     textView_accountType.setText(getResources().getString(R.string.kid));
                 } else {
-                    ParentsFragment parentsFragment = new ParentsFragment();
+                    ParentsFragment parentsFragment = ParentsFragment.newInstance(user.getKidUsername());
                     fragmentManager.beginTransaction()
                             .replace(R.id.main_frame, parentsFragment)
                             .commit();

@@ -21,7 +21,7 @@ import io.realm.Realm;
 public class RegisterActivity extends AppCompatActivity {
 
     //Views
-    TextInputLayout textInputLayout_username, textInputLayout_password, textInputLayout_confirmPassword;
+    TextInputLayout textInputLayout_username, textInputLayout_password, textInputLayout_confirmPassword, textInputLayout_kidsUsername;
     TextView textView_signIn, textView_accountType;
     Button button_register;
     RadioGroup radioGroup_accountType;
@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         textInputLayout_username = findViewById(R.id.register_textInputLayout_username);
         textInputLayout_password = findViewById(R.id.register_textInputLayout_password);
         textInputLayout_confirmPassword = findViewById(R.id.register_textInputLayout_confirmPassword);
+        textInputLayout_kidsUsername = findViewById(R.id.register_textInputLayout_kidsUsername);
         textView_signIn = findViewById(R.id.register_text_signIn);
         button_register = findViewById(R.id.button_register);
         radioGroup_accountType = findViewById(R.id.radioGroup_accountType);
@@ -167,6 +168,8 @@ public class RegisterActivity extends AppCompatActivity {
                     twitter.setUsername(username);
                     twitter.setVisitTimes(0);
                     twitter.setName("twitter");
+                } else {
+                    user.setKidUsername(textInputLayout_kidsUsername.getEditText().getText().toString());
                 }
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 RegisterActivity.this.finish();

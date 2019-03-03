@@ -5,11 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ParentsFragment">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/parent"
-        android:textSize="20sp" />
-
+        android:layout_gravity="center" />
 </FrameLayout>
