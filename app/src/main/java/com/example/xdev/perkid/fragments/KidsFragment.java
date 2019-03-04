@@ -1,5 +1,7 @@
 package com.example.xdev.perkid.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -94,6 +96,7 @@ public class KidsFragment extends Fragment implements SocialMediaAdapter.ListIte
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
+                openBrowser(socialMediaName);
                 getSocialMediaView();
                 // Transaction was a success.
                 // Toast.makeText(MainActivity.this, "EditSuccess", Toast.LENGTH_SHORT).show();
@@ -169,6 +172,29 @@ public class KidsFragment extends Fragment implements SocialMediaAdapter.ListIte
             }
         });
 
+    }
+
+    void openBrowser(String socialMediaName) {
+        String URL = "";
+        if (socialMediaName.equals("youtube"))
+            URL = "https://www.youtube.com/";
+
+        if (socialMediaName.equals("facebook"))
+            URL = "https://www.facebook.com/";
+
+        if (socialMediaName.equals("instagram"))
+            URL = "https://www.instagram.com/";
+
+        if (socialMediaName.equals("pinterest"))
+            URL = "https://www.pinterest.com/";
+
+        if (socialMediaName.equals("snapchat"))
+            URL = "https://www.snapchat.com/";
+
+        if (socialMediaName.equals("twitter"))
+            URL = "https://twitter.com/";
+
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
     }
 }
 

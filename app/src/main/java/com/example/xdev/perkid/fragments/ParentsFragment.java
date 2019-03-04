@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.xdev.perkid.R;
 import com.example.xdev.perkid.adapters.HistoryAdapter;
@@ -29,6 +30,8 @@ public class ParentsFragment extends Fragment {
     HistoryAdapter historyAdapter;
     Realm realm;
     String kidUserName;
+
+    TextView empty_view;
 
     public ParentsFragment() {
         // Required empty public constructor
@@ -53,6 +56,7 @@ public class ParentsFragment extends Fragment {
         kidUserName = getArguments().getString("KIDS_USER_NAME");
 
         rv_history = rootView.findViewById(R.id.rv_history);
+        empty_view = rootView.findViewById(R.id.emptyView);
         historyList = new ArrayList<>();
 
         getHistoryView();
@@ -77,11 +81,15 @@ public class ParentsFragment extends Fragment {
                         .equalTo("kidUsername", kidUserName)
                         .findAll();
 
-                for (int i = 0; i < realmResults.size(); i++) {
-                    HistoryAdapterModel historyAdapterModel = new HistoryAdapterModel
-                            (realmResults.get(i).getSocialMediaName(),
-                                    realmResults.get(i).getSocialMediaTimeAndData());
-                    historyList.add(historyAdapterModel);
+                if (realmResults.isEmpty()) {
+                    empty_view.setVisibility(View.VISIBLE);
+                } else {
+                    for (int i = 0; i < realmResults.size(); i++) {
+                        HistoryAdapterModel historyAdapterModel = new HistoryAdapterModel
+                                (realmResults.get(i).getSocialMediaName(),
+                                        realmResults.get(i).getSocialMediaTimeAndData());
+                        historyList.add(historyAdapterModel);
+                    }
                 }
 
             }
