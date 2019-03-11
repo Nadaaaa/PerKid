@@ -1,9 +1,14 @@
 package com.example.xdev.perkid.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         getCurrentUser();
 
         onClickSignOutImage();
+
+        isPermissionGranted();
 
     }
 
@@ -113,6 +120,44 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+
+            String[] permissions = {Manifest.permission.CALL_PHONE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
+            if (checkSelfPermission(android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG", "Permission is granted");
+                return true;
+            } else {
+                Log.v("TAG", "Permission is revoked");
+                requestPermissions(permissions, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG", "Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                if (grantResults.length > 0) {
+                    for (int grantResult : grantResults) {
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     void signOut() {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));

@@ -116,6 +116,21 @@
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/register_textInputLayout_parentMobileNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="@string/parent_mobile_number"
+                        app:hintAnimationEnabled="false">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
                     <TextView
                         android:id="@+id/register_text_accountType"
                         android:layout_width="wrap_content"

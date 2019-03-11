@@ -86,8 +86,10 @@ public class ParentsFragment extends Fragment {
                 } else {
                     for (int i = 0; i < realmResults.size(); i++) {
                         HistoryAdapterModel historyAdapterModel = new HistoryAdapterModel
-                                (realmResults.get(i).getSocialMediaName(),
-                                        realmResults.get(i).getSocialMediaTimeAndData());
+                                (
+                                        realmResults.get(i).getSocialMediaName(),
+                                        realmResults.get(i).getSocialMediaTimeAndData(),
+                                        realmResults.get(i).getCurrentLocation());
                         historyList.add(historyAdapterModel);
                     }
                 }

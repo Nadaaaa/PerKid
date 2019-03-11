@@ -7,6 +7,7 @@ public class History extends RealmObject {
     private String kidUsername;
     private String socialMediaName;
     private String socialMediaTimeAndData;
+    private String currentLocation;
 
     public String getSocialMediaName() {
         return socialMediaName;
@@ -30,5 +31,13 @@ public class History extends RealmObject {
 
     public void setKidUsername(String kidUsername) {
         this.kidUsername = kidUsername;
+    }
+
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
     }
 }

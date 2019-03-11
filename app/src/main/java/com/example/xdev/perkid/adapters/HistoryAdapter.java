@@ -72,6 +72,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         }
 
         historyViewHolder.SocialMediaTimeAndDate.setText(String.valueOf(historyList.get(i).getSocialMediaTimeAndData()));
+        historyViewHolder.kidLocation.setText(historyList.get(i).getKidLocation());
     }
 
     @Override
@@ -84,6 +85,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         TextView SocialMediaName;
         TextView SocialMediaTimeAndDate;
         ImageView SocialMediaImage;
+        TextView kidLocation;
 
         HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,6 +93,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             SocialMediaImage = itemView.findViewById(R.id.history_image);
             SocialMediaName = itemView.findViewById(R.id.history_name);
             SocialMediaTimeAndDate = itemView.findViewById(R.id.history_timeAndDate);
+            kidLocation = itemView.findViewById(R.id.history_kidLocation);
         }
     }
 }

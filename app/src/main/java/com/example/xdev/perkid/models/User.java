@@ -8,6 +8,7 @@ public class User extends RealmObject {
     private String password;
     private String accountType;
     private String kidUsername;
+    private String parentMobileNumber;
     private boolean isLogged;
 
     public String getUsername() {
@@ -48,5 +49,13 @@ public class User extends RealmObject {
 
     public void setKidUsername(String kidUsername) {
         this.kidUsername = kidUsername;
+    }
+
+    public String getParentMobileNumber() {
+        return parentMobileNumber;
+    }
+
+    public void setParentMobileNumber(String parentMobileNumber) {
+        this.parentMobileNumber = parentMobileNumber;
     }
 }

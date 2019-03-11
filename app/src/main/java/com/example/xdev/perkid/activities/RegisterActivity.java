@@ -21,7 +21,7 @@ import io.realm.Realm;
 public class RegisterActivity extends AppCompatActivity {
 
     //Views
-    TextInputLayout textInputLayout_username, textInputLayout_password, textInputLayout_confirmPassword, textInputLayout_kidsUsername;
+    TextInputLayout textInputLayout_username, textInputLayout_password, textInputLayout_confirmPassword, textInputLayout_kidsUsername, textInputLayout_parentMobileNo;
     TextView textView_signIn, textView_accountType;
     Button button_register;
     RadioGroup radioGroup_accountType;
@@ -40,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
         textInputLayout_password = findViewById(R.id.register_textInputLayout_password);
         textInputLayout_confirmPassword = findViewById(R.id.register_textInputLayout_confirmPassword);
         textInputLayout_kidsUsername = findViewById(R.id.register_textInputLayout_kidsUsername);
+        textInputLayout_parentMobileNo = findViewById(R.id.register_textInputLayout_parentMobileNo);
+
         textView_signIn = findViewById(R.id.register_text_signIn);
         button_register = findViewById(R.id.button_register);
         radioGroup_accountType = findViewById(R.id.radioGroup_accountType);
@@ -99,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     boolean isValidData() {
 
-        if ((!Utils.isEmptyInputTextLayout(textInputLayout_username, textInputLayout_password, textInputLayout_confirmPassword))) {
+        if ((!Utils.isEmptyInputTextLayout(textInputLayout_username, textInputLayout_password, textInputLayout_confirmPassword,textInputLayout_parentMobileNo))) {
             if (Utils.isValidPassword(textInputLayout_password)) {
                 if (Utils.isMatched(textInputLayout_password, textInputLayout_confirmPassword)) {
                     // if user didn't select account type the selected Id will be -1
@@ -136,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setUsername(username);
                 user.setPassword(password);
                 user.setAccountType(accountType);
+                user.setParentMobileNumber(textInputLayout_parentMobileNo.getEditText().getText().toString());
                 user.setLogged(true);
 
                 if (accountType.equals("kid")) {
